@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+
+	<application>
+		<resource-bundle>
+			<base-name>resources.messages</base-name>
+			<var>msg</var>
+		</resource-bundle>
+	</application>
+
+	<navigation-rule>
+		<from-view-id>/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>logar</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/usuarios.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>novo</from-outcome>
+			<to-view-id>/usuario.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>alterar</from-outcome>
+			<to-view-id>/usuario.xhtml</to-view-id>
+			<redirect include-view-params="true"/>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/usuario.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>atualizarTela</from-outcome>
+			<to-view-id>/usuario.xhtml</to-view-id>
+			<redirect include-view-params="true"/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>voltar</from-outcome>
+			<to-view-id>/usuarios.xhtml</to-view-id>
+			<redirect include-view-params="true"/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancelar</from-outcome>
+			<to-view-id>/usuarios.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

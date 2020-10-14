@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>#{msg['lbl.desafio.sefaz']}</title>
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+		<link rel="stylesheet" href="./css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css" />
+
+		<link rel="stylesheet" href="./css/AdminLTE.min.css" />
+		<link rel="stylesheet" href="./css/AdminLTE-Custom.css" />
+		<link rel="stylesheet" href="./css/_all-skins.min.css" />
+		<link rel="stylesheet" href="./css/desafioListagem.css" />
+
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" />
+		<script src="./scripts/bootstrap.min.js"></script>
+		<script src="./scripts/adminlte.min.js"></script>
+		<script src="./scripts/desafio.js"></script>
+	</h:head>
+ 
+	<h:body id="bodyHtml" styleClass="hold-transition skin-blue sidebar-mini">
+		<p:growl id="grwMensagens" showDetail="true" life="7000" escape="false" />
+
+		<div class="wrapper">
+			<p:layout>
+				<ui:include src="/WEB-INF/template/cabecalho.xhtml"/>
+				<ui:include src="/WEB-INF/template/menu.xhtml"/>
+				<ui:insert name="conteudo" />
+			</p:layout>
+		</div>
+		<script type="text/javascript">
+
+			$('.sidebar-toggle').bind("click", function() {
+				
+				$('.menu-open .treeview-menu').prop('style','display:none');
+				$('.menu-open').attr('class','treeview');
+			});
+
+			$(document).ready(function() {
+
+				if ($('header').width() > 767) {
+
+					$('#bodyHtml').attr('class','skin-blue sidebar-mini');
+				}
+				else {
+
+					$('#bodyHtml').attr('class','skin-blue sidebar-mini');
+				}
+			});
+
+			$(window).resize(function() {
+
+				if ($('header').width() > 767) {
+
+					if ($("#bodyHtml").attr("class") == "skin-blue sidebar-mini sidebar-collapse") {
+
+						$('#bodyHtml').attr('class','skin-blue sidebar-mini');
+					}
+					
+					if ($("#bodyHtml").attr("class") == "skin-blue sidebar-mini") {
+
+						$('#bodyHtml').attr('class','skin-blue sidebar-mini sidebar-collapse');
+					}
+				}
+				else {
+
+					if ($("#bodyHtml").attr("class") == "skin-blue sidebar-mini sidebar-collapse" || $("#bodyHtml").attr("class") == "skin-blue sidebar-mini sidebar-open sidebar-collapse") {
+
+						$('#bodyHtml').attr('class','skin-blue sidebar-mini');
+					}
+				}
+			});
+
+			$.urlParam = function(pParametro) {
+
+				var results = new RegExp('[\?&amp;]' + pParametro + '=([^&amp;#]*)').exec(window.location.href);
+
+				if (results == null) {
+
+					return null;
+				}
+				else {
+
+					return results[1] || null;
+				}
+			}
+
+		</script>
+	</h:body>
+</html>

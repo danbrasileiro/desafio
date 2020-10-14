@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+	<h:form>
+
+		<header class="main-header">
+			<a href="index.jsf" class="logo">
+				<span class="logo-mini" style="font-size:12px;text-align:center;">#{msg['lbl.desafio']}</span>
+				<span class="logo-lg" style="text-align:center;">#{msg['lbl.desafio']}</span>
+			</a>
+
+			<nav class="navbar navbar-static-top" style="text-align:center;">
+				<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button"></a>
+				<label id="lblTituloSistema">#{msg['lbl.sefaz']}</label>
+				<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
+						<li class="dropdown user user-menu">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<img src="img/user2-160x160.jpg" class="user-image" />
+								<span class="hidden-xs">#{usuario.nome}</span>
+							</a>
+							<ul class="dropdown-menu">
+								<li class="user-header red">
+									<img src="img/user2-160x160.jpg" class="img-circle" />
+									<p>#{usuario.nome}</p>
+								</li>
+								<li class="user-footer">
+									<div class="pull-left">
+										<a href="usuario.jsf?id=#{usuario.email}" class="btn btn-default btn-flat">#{msg['lbl.perfil']}</a>
+									</div>
+									<div class="pull-right">
+										<h:commandLink action="#{loginView.logout}" styleClass="btn btn-default btn-flat" value="#{msg['lbl.sair']}"></h:commandLink>
+									</div>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+	</h:form>
+</html>

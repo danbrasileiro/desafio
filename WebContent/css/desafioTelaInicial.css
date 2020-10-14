@@ -1,0 +1,153 @@
+@media (max-width:767px) {
+
+	.logo-inicial {
+		position:absolute;
+		width:340px;
+		top:50%;
+		left:50%;
+		margin: -34px 0px 0px -170px;
+		display:none !important;
+	}
+
+	.divIcone {
+		width:33.33%;
+		height:33.33%;
+		float:left;
+	}
+
+	.divIcone a {
+		top:50%;
+		margin-top:-50%;
+	}
+
+	#lblTituloSistema {
+		color:white;
+		height:50px;
+		line-height:50px;
+		font-size:20px;
+		margin:0px;
+		padding:0px;
+	}
+
+	.user-image {
+		position:relative;
+		top:3px;
+	}
+
+	.sidebar-open .content-wrapper,.sidebar-open .main-footer {
+		-webkit-transform:translate(0px, 0);
+		-ms-transform:translate(0px, 0);
+		-o-transform:translate(0px, 0);
+		transform:translate(0px, 0);
+	}
+	.main-sidebar {
+		width: 100%;
+		opacity:0.95;
+		-webkit-transform:translate(0,-100%);
+		-ms-transform:translate(0,-100%);
+		-o-transform:translate(0,-100%);
+		transform:translate(0,-100%);
+	}
+	.sidebar-menu.tree {
+		background-color: #234265 !important;
+	}
+
+	.menuRight {
+		position:absolute !important;
+		top:0px;
+		right:0px;
+		width:50%;
+		text-align:right;
+		padding-right:15px !important;
+	}
+}
+
+@media (max-width:767px) and (orientation : landscape) {
+
+	.content-wrapper {
+		position:absolute;
+		width:100%;
+		height:100%;
+		text-align:center;
+	}
+	.sidebar {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: #234265 !important;
+	}
+}
+
+@media (max-width:767px) and (orientation : portrait) {
+
+	.content-wrapper {
+		position:absolute;
+		top:0px;
+		width:100%;
+		height:100%;
+		text-align:center;
+		padding-top:100px;
+	}
+}
+
+@media (min-width:768px) {
+
+	.logo-inicial {
+		position:absolute;
+		width:340px;
+		top:50%;
+		left:50%;
+		margin: -133px 0px 0px -145px;
+		display:block !important;
+	}
+
+	.divIcone {
+position:relative;
+width:33.33%;
+line-height:200px;
+float:left;
+		height:200px;
+		display:none !important;
+	}
+
+	.icones {
+		margin-top:120px;
+	}
+
+	#lblTituloSistema {
+		color:white;
+		height:50px;
+		line-height:50px;
+		font-size:20px;
+		margin:0px;
+		padding:0px;
+	}
+
+	.content-wrapper {
+		//position:absolute;
+		top:0px;
+		width:100%;
+		height:100%;
+		text-align:center;
+		//padding-top:100px;
+	}
+
+	.menuRight {
+		display:none !important;
+	}
+}
+
+html {
+	//background-color: #234265 !important;
+}
+
+.icones {
+	position:relative;
+	font:normal normal normal 70px/1 FontAwesome;
+}
+
+.lblDescricaoIcones {
+	position:absolute;
+	top:76px;
+	font-size:18px;
+}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template/templateCadastro.xhtml">
+
+	<ui:define name="conteudo">
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{usuariosView.usuario.email}"/>
+			<f:viewParam name="operacao" value="#{usuariosView.acao}" />
+		</f:metadata>
+
+		<div class="content-wrapper">
+			<section class="content-header">
+				<h1>
+					<label id="lblTitulo">#{usuariosView.acao}</label> #{msg['lbl.usuario']}
+				</h1>
+				<ol class="breadcrumb">
+					<li><i class="fa fa-dashboard"></i> <a href="index.jsf">#{msg['lbl.home']}</a> > #{msg['lbl.cadastros']} > <a href="usuarios.jsf">#{msg['lbl.usuarios']}</a> > <label id="lblBreadCrumb"> #{usuariosView.acao}</label> #{msg['lbl.usuario']}</li>
+				</ol>
+			</section>
+			<section class="content">
+				<h:form id="frmUsuario" prependId="false">
+
+					<div class="box box-red">
+						<div class="box-header with-border">
+							<h3 class="box-title"><h:outputText value="#{msg['lbl.formulario']}" /></h3>
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+									<i class="fa fa-minus"></i>
+								</button>
+							</div>
+						</div>
+						<div class="box-body">
+							<div class="col-md-12" style="margin-top:5px;">
+								<div class="form-group">
+									<label for="inpNome"><h:outputText value="* #{msg['lbl.nome']}:" /></label>
+									<p:inputText id="inpNome" value="#{usuariosView.usuario.nome}" placeholder="#{msg['lbl.digite.o.nome.do.usuario']}..." requiredMessage="#{msg['msg.favor.informar.o.nome']}" style="width:100%;" required="true"/>
+									<p:tooltip for="inpNome" value="#{msg['msg.favor.informar.o.nome.do.usuario']}" showEffect="clip" position="top"/>
+								</div>
+								<div class="form-group has-feedback">
+									<label for="inpEmail"><h:outputText value="* #{msg['lbl.email']}:" /></label>
+									<p:inputText id="inpEmail" value="#{usuariosView.usuario.email}" placeholder="#{msg['lbl.digite.o.email.do.usuario']}..." style="width:100%;" required="true" 
+										requiredMessage="#{msg['msg.favor.informar.o.email']}" validatorMessage="#{msg['msg.favor.informar.um.email.valido']}" readonly="#{usuariosView.modoAlteracao}">
+											<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+									</p:inputText>
+									<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+									<p:tooltip for="inpEmail" value="#{msg['msg.favor.informar.o.email']}" showEffect="clip" position="top"/>
+								</div>
+								<div class="form-group has-feedback">
+									<label for="pswSenha"><h:outputText value="* #{msg['lbl.senha']}:" /></label>
+									<p:inputText id="txtSenha" value="#{usuariosView.usuario.senha}" type="hidden" required="true" requiredMessage="#{msg['msg.favor.informar.a.senha']}"/>
+									<p:password id="pswSenha" placeholder="#{msg['lbl.digite.a.senha.do.usuario']}..." style="width:100%;" />
+									<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+									<p:tooltip for="pswSenha" value="#{msg['msg.favor.informar.a.senha']}" showEffect="clip" position="top"/>
+								</div>
+								<div class="form-group has-feedback">
+									<p:fieldset id="pnlTelefones" legend="#{msg['lbl.telefones.do.usuario']}" toggleable="true" collapsed="#{empty usuariosView.telefonesUsuario}">
+										<div class="form-group has-feedback">
+											<label for="sltTipoTelefone" style="float:left;"><h:outputText value="#{msg['lbl.tipo.telefone']}:" /></label>
+											<p:selectOneMenu id="sltTipoTelefone" appendTo="sltTipoTelefone" style="width:100%;">
+												<f:selectItem itemLabel="#{msg['lbl.selecione.o.tipo.de.telefone']}..." itemValue=""  />
+												<f:selectItems value="#{usuariosView.tiposTelefone}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo.codigo}"/>
+											</p:selectOneMenu>
+											<p:tooltip for="sltTipoTelefone" value="#{msg['msg.favor.informar.o.tipo.do.telefone']}" showEffect="clip" position="top"/>
+										</div>
+										<div class="form-group has-feedback">
+											<label for="inpTelefone" style="float:left;"><h:outputText value="* #{msg['lbl.telefone']}:" /></label>
+											<p:inputText id="inpTelefone" placeholder="#{msg['lbl.digite.o.telefone.do.usuario']}..." style="width:100%;" />
+											<p:tooltip for="inpTelefone" value="#{msg['msg.favor.informar.o.telefone.do.usuario']}" showEffect="clip" position="top"/>
+										</div>
+										<div class="form-group has-feedback" style="height:36px;">
+											<p:commandButton value="Adicionar" action="#{usuariosView.adicionarTelefone}" process="@form" update="grwMensagens,tblTelefonesUsuario" immediate="true" styleClass="btn btn-form btn-danger pull-left" style="padding:0px;margin:5px 0px 7px 0px;float:right !important;color:white;" />
+										</div>
+										<div class="form-group has-feedback">
+
+											<p:dataTable id="tblTelefonesUsuario" value="#{usuariosView.telefonesUsuario}" var="telUser" rows="10" paginator="true" multiViewState="true"
+												paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+												rowsPerPageTemplate="10,50,100" pageLinks="5" emptyMessage="#{msg['lbl.telefone.nao.cadastrado']}" rowIndexVar="rowIx" style="text-align:center;">
+
+												<p:column headerText="#{msg['lbl.tipo.telefone']}">
+													<h:outputText value="#{telUser.tipoTelefone.nome}" />
+												</p:column>
+
+												<p:column headerText="#{msg['lbl.telefone']}">
+													<h:outputText value="(#{telUser.ddd}) #{telUser.numero}" />
+												</p:column>
+
+												<p:column style="width:55px;text-align:center;height:39px;">
+
+													<p:commandButton icon="ui-icon-closethick" title="#{msg['lbl.excluir.registro']}" immediate="true" action="#{usuariosView.excluirTelefoneUsuario}" update="grwMensagens,tblTelefonesUsuario">
+														<f:setPropertyActionListener value="#{telUser}" target="#{usuariosView.telefoneUsuario}" />
+													</p:commandButton>
+
+												</p:column>
+
+											</p:dataTable>
+
+										</div>
+									</p:fieldset>
+								</div>
+							</div>
+							<div class="box-footer">
+								<div class="col-md-6 pull-right block">
+									<p:commandButton id="atualizar" value="#{usuariosView.acao}" action="#{usuariosView.atualizar}" styleClass="btn btn-form btn-danger pull-left" 
+										update="grwMensagens, frmUsuario" onclick="return valida('Senha');" ajax="false" />
+								</div>
+								<div class="col-md-6 pull-left block">
+									<p:commandButton value="#{msg['lbl.cancelar']}" action="#{usuariosView.cancelar}" styleClass="btn btn-form btn-normal pull-right" immediate="true" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<p:inputText id="operacao" value="#{usuariosView.acao}" type="hidden"/>
+				</h:form>
+			</section>
+		</div>
+		<script type="text/javascript">
+
+			$(document).ready(function() {
+
+				clearComp('txtSenha');
+				$('#inpEmail').prop('readonly', $('#operacao').val() == 'Alterar');
+				$('#lblTitulo').text($('#operacao').val());
+				$('#lblBreadCrumb').text($('#operacao').val());
+				$('#atualizar').text($('#operacao').val());
+				$('#atualizar').prop('style','padding:8px 26px;');
+			});
+
+			function mascara(o,f) {
+
+				v_obj=o;
+			    v_fun=f;
+			    execmascara();
+			}
+
+			function execmascara() {
+
+				v_obj.value=v_fun(v_obj.value);
+			}
+
+			function mtel(v) {
+
+			    v=v.replace(/\D/g,"");
+			    v=v.replace(/^(\d{2})(\d)/g,"($1) $2");
+			    v=v.replace(/(\d)(\d{4})$/,"$1-$2");
+
+			    return v;
+			}
+
+			function id(el) {
+
+				return document.getElementById(el);
+			}
+
+			id('inpTelefone').onkeyup = function() {
+				mascara(this, mtel);
+			}
+
+			id('inpTelefone').onkeydown = function() {
+				this.value = this.value.substring(0,14);
+				mascara(this, mtel);
+			}
+
+		</script>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template/templateListagem.xhtml">
+
+	<ui:define name="conteudo">
+
+		<f:metadata>
+			<f:viewParam name="operacao" value="#{usuariosView.acao}" />
+		</f:metadata>
+
+		<div class="content-wrapper">
+			<section class="content-header">
+				<h1>
+					#{msg['lbl.usuarios']}
+				</h1>
+				<ol class="breadcrumb">
+					<li><i class="fa fa-dashboard"></i> <a href="index.jsf">#{msg['lbl.home']}</a> > #{msg['lbl.cadastros']} > #{msg['lbl.usuarios']}</li>
+				</ol>
+			</section>
+			<section class="content">
+				<h:form id="frmUsuarios" prependId="false">
+
+					<p:dataTable id="tblUsuarios" var="usuario" value="#{usuariosView.usuarios}" editable="true" editMode="cell" widgetVar="refTabela" rows="10" paginator="true" multiViewState="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,50,100" pageLinks="5" emptyMessage="#{msg['lbl.usuario.nao.cadastrado']}" rowIndexVar="rowIx">
+
+						<f:facet name="header">
+
+							<span style="position:relative;line-height:30px;">#{msg['lbl.lista']}</span>
+
+							<h:commandLink style="position:relative;right:10px;float:right;">
+				                <img src="img/excel.png" alt="#{msg['lbl.excel']}" style="height:30px;"/>
+								<p:dataExporter type="xls" target="tblUsuarios" fileName="#{msg['lbl.usuarios.sa']}" pageOnly="true" encoding="iso-8859-1"/>
+							</h:commandLink>
+
+							<h:commandLink style="position:relative;top:-1px;right:13px;float:right;">
+								<img src="img/pdf.png" alt="#{msg['lbl.pdf']}" style="width:30px;height:29px;"/>
+								<p:dataExporter type="pdf" target="tblUsuarios" fileName="#{msg['lbl.usuarios.sa']}" pageOnly="true" preProcessor="#{usuariosView.processarPDF}" encoding="iso-8859-1"/>
+							</h:commandLink>
+
+						</f:facet>
+
+						<p:ajax event="cellEdit" listener="#{usuariosView.editarColuna}" oncomplete="PF('refTabela').filter();" update="grwMensagens" />
+
+						<p:column headerText="#{msg['lbl.nome']} *">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{usuario.nome}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="inpNomeUsuario" value="#{usuario.nome}" style="width:100%;"/>
+									<p:tooltip for="inpNomeUsuario" value="#{msg['msg.favor.informar.o.nome.do.usuario']}" showEffect="clip" position="top"/>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="#{msg['lbl.email']}">
+							<h:outputText value="#{usuario.email}" />
+						</p:column>
+
+						<p:column style="width:105px;text-align:center;height:39px;" exportable="false" filterable="false">
+
+							<f:facet name="header">
+								<p:commandButton icon="ui-icon-newwin" value="#{msg['lbl.novo']}" title="#{msg['lbl.adicionar.novo.registro']}" action="#{usuariosView.novo}"/>
+				            </f:facet>
+
+							<p:commandButton icon="ui-icon-search" title="#{msg['lbl.alterar.registro']}" action="#{usuariosView.alterar}" ajax="false" onclick="acaoAlterar();">
+								<f:setPropertyActionListener value="#{usuario}" target="#{usuariosView.usuario}" />
+								<f:setPropertyActionListener value="Alterar" target="#{usuariosView.acao}" />
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-closethick" title="#{msg['lbl.excluir.registro']}" action="#{usuariosView.excluirRegistro}" update="grwMensagens,tblUsuarios">
+								<p:confirm header="#{msg['lbl.excluir.registro']}" message="#{msg['lbl.tem.certeza.que.deseja.excluir.o.usuario']} #{usuario.nome}?" icon="ui-icon-alert"  />
+								<f:setPropertyActionListener value="#{usuario}" target="#{usuariosView.usuario}" />
+							</p:commandButton>
+
+						</p:column>
+
+					</p:dataTable>
+
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
+						<p:commandButton value="#{msg['lbl.nao']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" style="float:right;" />
+						<p:commandButton value="#{msg['lbl.sim']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" style="float:right;" />
+					</p:confirmDialog>
+
+					<p:inputText id="operacao" value="#{usuariosView.acao}" type="hidden"/>
+
+				</h:form>
+			</section>
+		</div>
+
+		<script type="text/javascript">
+
+			function acaoAlterar() {
+
+				$('#operacao').val('Alterar');
+			}
+
+		</script>
+
+	</ui:define>
+</ui:composition>
